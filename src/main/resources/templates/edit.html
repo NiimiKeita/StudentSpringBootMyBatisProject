@@ -4,25 +4,46 @@
 <head>
 <meta charset="UTF-8">
 <title>生徒情報</title>
+<!--// バリデーションエラー用スタイル-->
+<style>
+	.red {
+		color: red;
+	}
+</style>
 </head>
 <body>
-    <h1>編集</h1>
-<!--    // th:method - HTTPメソッドのPUTを使用-->
+	<h1>編集</h1>
+<!--    // th:method - HTTPメソッドのPATCHを使用-->
 <!--    // th:action - フォームの送信先を「ルートパス/update」に設定-->
 <!--    // th:object - Controllerから渡ってきたオブジェクトにバインド-->
-    <form th:method="patch" th:action="@{/update}" th:object="${studentData}">
-        <input type="hidden" th:field="*{id}">
-        <div>
-            <label for="name">名前</label>
+	<form th:method="patch" th:action="@{/update}" th:object="${studentData}">
+		
+		<input type="hidden" th:field="*{id}" />
+		
+		<div>
+			<label for="name">名前</label>
 <!--            // th:field - studentDataオブジェクトのnameプロパティにアクセスして[id, name, value]属性を出力 -->
-            <input type="text" th:field="*{name}">
-        </div>
-        <div>
-            <label for="score">点数</label>
+			<input type="text" th:field="*{name}" placeholder="名前を入力してください"/>
+<!--            // th:if - nameプロパティにバリデーションエラーがあるかどうか判定-->
+<!--            // th:errors - nameプロパティに関連するバリデーションエラーを取得表示-->
+<!--            // th:errorclass - nameプロパティにバリデーションエラーが存在する場合に指定のCSS要素を設定する-->
+                <div th:if="${#fields.hasErrors('name')}" class="red">
+                    <p th:errors="*{name}"></p>
+                </div>
+		</div>
+		<div>
+			<label for="score">点数</label>
 <!--            // th:field - studentDataオブジェクトのscoreプロパティにアクセスして[id, name, value]属性を出力 -->
-            <input type="text" th:field="*{score}">
-        </div>
-        <input type="submit" value="更新">
-    </form>
+			<input type="text" th:field="*{score}" placeholder="点数を入力してください"/>
+<!--            // th:if - scoreプロパティにバリデーションエラーがあるかどうか判定-->
+<!--            // th:errors - scoreプロパティに関連するバリデーションエラーを取得表示-->
+<!--            // th:errorclass - scoreプロパティにバリデーションエラーが存在する場合に指定のCSS要素を設定する-->
+<div th:if="${#fields.hasErrors('score')}" class="red">
+                   <p th:errors="*{score}"></p>
+             </div>
+		</div>
+		<input type="submit" value="登録">
+		<a th:href="@{/}">戻る</a>
+	</form>
 </body>
 </html>

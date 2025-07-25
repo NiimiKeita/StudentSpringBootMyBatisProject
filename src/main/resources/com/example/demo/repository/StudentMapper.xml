@@ -37,14 +37,15 @@
 	</insert>
 	
 <!--     // 学生情報テーブル内の指定されたIDのレコードのスコアを更新するためのUPDATE文 -->
-	<update id="update">
-		UPDATE
-			student
-		SET
-			score = #{score}
-		WHERE
-			id = #{id}
-	</update>
+<update id="update" parameterType="com.example.demo.entity.Student">
+	UPDATE
+		student
+	SET
+		name = #{name},
+		score = #{score}
+	WHERE
+		id = #{id}
+</update>
 	
 <!--     // 学生情報テーブル内の指定されたIDのレコードを削除するためのDELETE文 -->
 	<delete id="delete">
