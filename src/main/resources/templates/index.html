@@ -9,6 +9,27 @@
 	<h1>生徒情報</h1>
 <!--    // リンク先のURLを指定する-->
 	<a th:href="@{/create}">新規登録</a>
+    <hr>
+<!--    // 検索フォーム-->
+	<h3>検索フォーム</h3>
+<!--    // th:method - HTTPメソッドのPOSTを使用-->
+<!--    // th:action - フォームの送信先を「ルートパス/」に設定-->
+<!--    // th:object - Controllerから渡ってきたオブジェクトにバインド-->
+	<form th:method="post" th:action="@{/}" th:object="${studentQuery}">
+		<div>
+			<label for="id">ID:          </label>
+<!--            // th:field - studentDataオブジェクトのidプロパティにアクセスして[id, name, value]属性を出力 -->
+			<input type="text" th:field="*{id}">
+		</div>
+		<div>
+			<label>名前: </label>
+<!--            // th:field - studentDataオブジェクトのnameプロパティにアクセスして[id, name, value]属性を出力-->
+			<input type="text" th:field="*{name}">
+		</div>
+		<br>
+		<input type="submit" value="検索">
+        <a th:href="@{/}">リセット</a>
+	</form>
 	<hr>
 	<table>
 		<tr>
@@ -30,21 +51,21 @@
 <!--                // th:action - フォームの送信先を「ルートパス/delete」に設定-->
 				<form th:method="delete" th:action="@{/delete}">
 <!--                    // 非表示でデータを送信-->
-<!--　　　　　　　　　　// th:value - studentオブジェクトのidプロパティにアクセスし値に設定-->
+<!--　　　　　　　　　　　// th:value - studentオブジェクトのidプロパティにアクセスし値に設定-->
 <!--                    // リクエストパラメーターの名前をidとする-->
 					<input type="hidden" name="id" th:value="${student.id}">
 					<input type="submit" value="削除">
 				</form>
 			</td>
 			<td>
-<!--			                // th:method - HTTPメソッドのPATCHを使用-->
-<!--			                // th:action - フォームの送信先を「ルートパス/logical/delete」に設定-->
+<!--			     // th:method - HTTPメソッドのPATCHを使用-->
+<!--			     // th:action - フォームの送信先を「ルートパス/logical/delete」に設定-->
 				<form th:method="patch" th:action="@{/logical/delete}">
-<!--			                    // 非表示でデータを送信-->
-<!--			　　　　　　　　　　// th:value - studentオブジェクトのidプロパティにアクセスし値に設定-->
-<!--			                    // リクエストパラメーターの名前をidとする-->
-								<input type="hidden" name="id" th:value="${student.id}">
-								<input type="submit" value="論理削除">
+<!--			         // 非表示でデータを送信-->
+<!--			// th:value - studentオブジェクトのidプロパティにアクセスし値に設定-->
+<!--			         // リクエストパラメーターの名前をidとする-->
+					<input type="hidden" name="id" th:value="${student.id}">
+					<input type="submit" value="論理削除">
 				</form>
 			</td>
 		</tr>

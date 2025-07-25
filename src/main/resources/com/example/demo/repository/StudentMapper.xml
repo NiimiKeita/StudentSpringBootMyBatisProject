@@ -12,7 +12,7 @@
 			*
 		FROM
 			student
-		WHERE
+        WHERE
             delete_data IS NULL
 	</select>
 
@@ -27,6 +27,24 @@
         AND
 			id = #{id}
 	</select>
+
+<!--     // 検索フォームの条件をもとに学生情報テーブルのレコードを検索するためのSELECT文 -->
+	<select id="search" resultType="com.example.demo.entity.Student">
+		SELECT
+			*
+		FROM
+			student
+		WHERE
+			delete_data IS NULL
+		<if test="id != null and id != ''">
+		AND
+			id = #{id}
+		</if>
+		<if test="name != null and name != ''">
+		AND
+			name LIKE CONCAT('%', #{name}, '%')
+		</if>
+	</select>
 	
 <!--     // 新しい学生情報を学生情報テーブルに追加するためのINSERT文 -->
 	<insert id="save">
@@ -37,15 +55,13 @@
 	</insert>
 	
 <!--     // 学生情報テーブル内の指定されたIDのレコードのスコアを更新するためのUPDATE文 -->
-<update id="update" parameterType="com.example.demo.entity.Student">
-	UPDATE
-		student
-	SET
-		name = #{name},
-		score = #{score}
-	WHERE
-		id = #{id}
-</update>
+	<update id="update">
+		UPDATE
+			student
+    SET name = #{name},
+        score = #{score}
+    WHERE id = #{id}
+	</update>
 	
 <!--     // 学生情報テーブル内の指定されたIDのレコードを削除するためのDELETE文 -->
 	<delete id="delete">
@@ -54,7 +70,9 @@
 		WHERE
 			id = #{id}
 	</delete>
-	<update id="logicalDelete">
+
+<!--     // 学生情報テーブル内の指定されたIDのレコードを論理削除するためのUPDATE文 -->
+    <update id="logicalDelete">
         UPDATE
             student
         SET
