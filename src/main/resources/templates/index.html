@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--// Thymeleafテンプレートエンジンを使用していることを示す-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>生徒情報</title>
+</head>
+<body>
+	<h1>生徒情報</h1>
+<!--    // リンク先のURLを指定する-->
+	<a th:href="@{/create}">新規登録</a>
+	<hr>
+	<table>
+		<tr>
+			<th>ID</th>
+			<th>名前</th>
+			<th>点数</th>
+		</tr>
+<!--        // th:each - studnetListから生徒情報を一行ずつ取得し、student変数に格納-->
+		<tr th:each="student:${studentList}">
+<!--            // th:text - studentオブジェクトのidプロパティにアクセスし表示-->
+			<td th:text="${student.id}"></td>
+<!--            // th:href - studentオブジェクトのidプロパティにアクセスしURLに設定-->
+<!--            // th:text - studentオブジェクトのnameプロパティにアクセスし表示-->
+			<td><a th:href="@{/edit/__${student.id}__}" th:text="${student.name}"></a></td>
+<!--            // th:text - studentオブジェクトのscoreプロパティにアクセスし表示-->
+			<td th:text="${student.score}"></td>
+			<td>
+<!--                // th:method - HTTPメソッドのDELETEを使用-->
+<!--                // th:action - フォームの送信先を「ルートパス/delete」に設定-->
+				<form th:method="delete" th:action="@{/delete}">
+<!--                    // 非表示でデータを送信-->
+<!--　　　　　　　　　　// th:value - studentオブジェクトのidプロパティにアクセスし値に設定-->
+<!--                    // リクエストパラメーターの名前をidとする-->
+					<input type="hidden" name="id" th:value="${student.id}">
+					<input type="submit" value="削除">
+				</form>
+			</td>
+			<td>
+<!--			                // th:method - HTTPメソッドのPATCHを使用-->
+<!--			                // th:action - フォームの送信先を「ルートパス/logical/delete」に設定-->
+				<form th:method="patch" th:action="@{/logical/delete}">
+<!--			                    // 非表示でデータを送信-->
+<!--			　　　　　　　　　　// th:value - studentオブジェクトのidプロパティにアクセスし値に設定-->
+<!--			                    // リクエストパラメーターの名前をidとする-->
+								<input type="hidden" name="id" th:value="${student.id}">
+								<input type="submit" value="論理削除">
+				</form>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

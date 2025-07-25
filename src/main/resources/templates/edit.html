@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--// Thymeleafテンプレートエンジンを使用していることを示す-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>生徒情報</title>
+</head>
+<body>
+    <h1>編集</h1>
+<!--    // th:method - HTTPメソッドのPUTを使用-->
+<!--    // th:action - フォームの送信先を「ルートパス/update」に設定-->
+<!--    // th:object - Controllerから渡ってきたオブジェクトにバインド-->
+    <form th:method="patch" th:action="@{/update}" th:object="${studentData}">
+        <input type="hidden" th:field="*{id}">
+        <div>
+            <label for="name">名前</label>
+<!--            // th:field - studentDataオブジェクトのnameプロパティにアクセスして[id, name, value]属性を出力 -->
+            <input type="text" th:field="*{name}">
+        </div>
+        <div>
+            <label for="score">点数</label>
+<!--            // th:field - studentDataオブジェクトのscoreプロパティにアクセスして[id, name, value]属性を出力 -->
+            <input type="text" th:field="*{score}">
+        </div>
+        <input type="submit" value="更新">
+    </form>
+</body>
+</html>

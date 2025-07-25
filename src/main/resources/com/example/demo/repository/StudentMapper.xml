@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- // xmlのバージョンが1.0、エンコーディングがUTF-8であることを指定 -->
+<!-- // MyBatisが使用するDTDを指定 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- // com.example.demo.dao.StudentMapper という名前空間にマッピングする -->
+<mapper namespace="com.example.demo.repository.StudentMapper">
+
+<!--     // 学生情報テーブル内のすべてのレコードを検索するためのSELECT文 -->
+	<select id="findAll" resultType="com.example.demo.entity.Student">
+		SELECT
+			*
+		FROM
+			student
+		WHERE
+            delete_data IS NULL
+	</select>
+
+<!--     // 学生情報テーブル内の指定されたIDのレコードを検索するためのSELECT文 -->
+	<select id="findById" resultType="com.example.demo.entity.Student">
+		SELECT
+			*
+		FROM
+			student
+        WHERE
+            delete_data IS NULL
+        AND
+			id = #{id}
+	</select>
+	
+<!--     // 新しい学生情報を学生情報テーブルに追加するためのINSERT文 -->
+	<insert id="save">
+		INSERT INTO
+			student (name, score)
+		VALUES
+			(#{name}, #{score})
+	</insert>
+	
+<!--     // 学生情報テーブル内の指定されたIDのレコードのスコアを更新するためのUPDATE文 -->
+	<update id="update">
+		UPDATE
+			student
+		SET
+			score = #{score}
+		WHERE
+			id = #{id}
+	</update>
+	
+<!--     // 学生情報テーブル内の指定されたIDのレコードを削除するためのDELETE文 -->
+	<delete id="delete">
+		DELETE FROM
+			student
+		WHERE
+			id = #{id}
+	</delete>
+	<update id="logicalDelete">
+        UPDATE
+            student
+        SET
+			delete_data = CURRENT_TIMESTAMP
+		WHERE
+			id = #{id}
+	</update>
+</mapper>
